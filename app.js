@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var indexRouter = require('./routes/index');
 var bookRouter = require('./routes/guestbook');
 var messageRouter = require('./routes/newmessage');
+var ajaxRouter = require('./routes/ajaxmessage');
 
 var app = express();
 
@@ -19,10 +20,12 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use('/', indexRouter);
 app.use('/guestbook', bookRouter);
+app.use('/ajaxmessage', express.static('public'));
+app.use('/add', ajaxRouter);
 app.use('/newmessage', bodyParser.urlencoded({extended: true}), messageRouter);
 
 // catch 404 and forward to error handler
